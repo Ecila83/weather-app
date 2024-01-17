@@ -22,7 +22,7 @@ async function obtenirDonneesMeteo(ville) {
     return await reponse.json();
 }
 
-function afficherPrevisionsMeteo(donnees, ville, container) {
+function afficherPrevisionsMeteo(donnees, ville, container, image) {
     const previsionsContainer = container || document.getElementById('previsionsMeteo');
 
     if (!donnees || !donnees.list || donnees.list.length === 0) {
@@ -32,11 +32,12 @@ function afficherPrevisionsMeteo(donnees, ville, container) {
         return;
     }
 
-    previsionsContainer.innerHTML = '';
+    previsionsContainer.style.backgroundImage = `url('${image}')`;
+    previsionsContainer.innerHTML = ''
 
     const datesAffichees = new Set();
 
-    for (const previsionsJour of donnees.list) {
+    for(const previsionsJour of donnees.list) {
         const datePrevision = new Date(previsionsJour.dt * 1000).toLocaleDateString('fr-FR');
         const temperatureCelsius = previsionsJour.main.temp;
 
@@ -54,15 +55,25 @@ function afficherPrevisionsMeteo(donnees, ville, container) {
                 <p>Vitesse du vent : ${previsionsJour.wind.speed} m/s</p>
                 `;
 
-            previsionsContainer.appendChild(jourElement);
             datesAffichees.add(datePrevision);
 
-            if (datesAffichees.size >= 5) {
-                break;
+            previsionsContainer.appendChild(jourElement);
+
+            if(datesAffichees.size >= 5) {
+                break
             }
         }
     }
 }
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    chargerVillesDepuisLocalStorage(document.getElementById('ville__complete'));
+    chargerVillesDepuisLocalStorage(document.getElementById('ville2__complete'));
+    document.getElementById('previsionsMeteo').parentElement.classList.add('ville-container');
+    document.getElementById('previsionsMeteo2').parentElement.classList.add('ville2-container');
+});
 
 async function entreeVille(cityName) {
     const params = new URLSearchParams({
@@ -111,30 +122,30 @@ document.getElementById('ville__adresse').addEventListener('keyup', (e) => {
 });
 
 
-document.getElementById('ville__button').addEventListener('click', async function (event) {
-    event.preventDefault();
+// document.getElementById('ville__button').addEventListener('click', async function (event) {
+//     event.preventDefault();
 
-    const ville = villeAdresse.value.trim();
-    if (!ville) {
-        alert("Veuillez entrer une ville valide.");
-        return;
-    }
+//     const ville = villeAdresse.value.trim();
+//     if (!ville) {
+//         alert("Veuillez entrer une ville valide.");
+//         return;
+//     }
 
-    try {
-        const donneesMeteo = await obtenirDonneesMeteo(ville);
-        afficherPrevisionsMeteo(donneesMeteo, ville);
+//     try {
+//         const donneesMeteo = await obtenirDonneesMeteo(ville);
+//         afficherPrevisionsMeteo(donneesMeteo, ville);
 
-        
-        ajouterVilleLocalStorage(ville);
-    } catch (erreur) {
-        alert(`Erreur lors de la récupération des informations météorologiques : ${erreur}`);
-    }
-    villeAdresse.value = '';
-});
+
+//         ajouterVilleLocalStorage(ville);
+//     } catch (erreur) {
+//         alert(`Erreur lors de la récupération des informations météorologiques : ${erreur}`);
+//     }
+//     villeAdresse.value = '';
+// });
 
 
 function ajouterVilleLocalStorage(ville, container) {
-    if (typeof(Storage) !== "undefined") {
+    if (typeof (Storage) !== "undefined") {
         const villesEnregistrees = JSON.parse(localStorage.getItem('villes')) || [];
 
         if (!villesEnregistrees.includes(ville)) {
@@ -189,8 +200,12 @@ async function traiterSoumissionVille(villeAdresse, previsionsMeteo) {
 
     try {
         const donneesMeteo = await obtenirDonneesMeteo(ville);
-        afficherPrevisionsMeteo(donneesMeteo, ville, previsionsMeteo);
-        ajouterVilleLocalStorage(ville);
+        const imageVille = await obtenirImageVille(ville);
+
+        afficherPrevisionsMeteo(donneesMeteo, ville, previsionsMeteo, imageVille);
+        ajouterVilleLocalStorage(ville, document.getElementById('ville__complete'));
+
+        previsionsMeteo.parentElement.classList.add('ville-container');
     } catch (erreur) {
         alert(`Erreur lors de la récupération des informations météorologiques : ${erreur}`);
     }
@@ -215,22 +230,43 @@ document.getElementById('ville2__adresse').addEventListener('keyup', (e) => {
     }, 400);
 });
 
-document.getElementById('ville2__button').addEventListener('click', async function (event) {
-    event.preventDefault();
+// document.getElementById('ville2__button').addEventListener('click', async function (event) {
+//     event.preventDefault();
 
-    const ville = villeAdresse2.value.trim();
-    if (!ville) {
-        alert("Veuillez entrer une ville valide.");
-        return;
-    }
+//     const ville = villeAdresse2.value.trim();
+//     if (!ville) {
+//         alert("Veuillez entrer une ville valide.");
+//         return;
+//     }
+
+//     try {
+//         const donneesMeteo = await obtenirDonneesMeteo(ville);
+//         afficherPrevisionsMeteo(donneesMeteo, ville, previsionsMeteo2);
+//         ajouterVilleLocalStorage(ville);
+//     } catch (erreur) {
+//         alert(`Erreur lors de la récupération des informations météorologiques : ${erreur}`);
+//     }
+
+//     villeAdresse2.value = '';
+// });
+
+async function obtenirImageVille(ville) {
+    const cleApiImage = 'H4wROuyTTghwfppzg5xg3EI9Ec5NslLEb51MPkY-71c';
+    const url = `https://api.unsplash.com/search/photos?query=${ville}&client_id=${cleApiImage}`;
 
     try {
-        const donneesMeteo = await obtenirDonneesMeteo(ville);
-        afficherPrevisionsMeteo(donneesMeteo, ville, previsionsMeteo2);
-        ajouterVilleLocalStorage(ville);
-    } catch (erreur) {
-        alert(`Erreur lors de la récupération des informations météorologiques : ${erreur}`);
-    }
+        const response = await fetch(url);
+        const data = await response.json();
 
-    villeAdresse2.value = '';
-});
+        if (data && data.results && data.results.length > 0) {
+            const image = data.results[0].urls.small;
+            return image;
+        } else {
+            console.error('Aucune image trouvée pour la ville :', ville);
+            return null;
+        }
+    } catch (error) {
+        console.error('Erreur lors de la récupération de l\'image :', error);
+        return null;
+    }
+}
