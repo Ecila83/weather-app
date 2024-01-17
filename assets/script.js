@@ -4,6 +4,10 @@ const villeButton = document.getElementById('ville__button');
 const previsionsMeteo = document.getElementById('previsionsMeteo');
 const villeComplete = document.getElementById('ville__complete');
 
+const villeAdresse2 = document.getElementById('ville2__adresse');
+const villeButton2 = document.getElementById('ville2__button');
+const previsionsMeteo2 = document.getElementById('previsionsMeteo2');
+
 
 async function obtenirDonneesMeteo(ville) {
     const cleApi = 'bf1a733eb58df0e14bb400e330ad9d9a';
@@ -18,15 +22,17 @@ async function obtenirDonneesMeteo(ville) {
     return await reponse.json();
 }
 
-function afficherPrevisionsMeteo(donnees, ville) {
-    const previsionsMeteo = document.getElementById('previsionsMeteo');
+function afficherPrevisionsMeteo(donnees, ville, container) {
+    const previsionsContainer = container || document.getElementById('previsionsMeteo');
 
     if (!donnees || !donnees.list || donnees.list.length === 0) {
-        previsionsMeteo.innerHTML = 'Aucune information météorologique disponible.';
+        if (previsionsContainer) {
+            previsionsContainer.innerHTML = 'Aucune information météorologique disponible.';
+        }
         return;
     }
 
-    previsionsMeteo.innerHTML = '';
+    previsionsContainer.innerHTML = '';
 
     const datesAffichees = new Set();
 
@@ -48,11 +54,11 @@ function afficherPrevisionsMeteo(donnees, ville) {
                 <p>Vitesse du vent : ${previsionsJour.wind.speed} m/s</p>
                 `;
 
-            previsionsMeteo.appendChild(jourElement);
+            previsionsContainer.appendChild(jourElement);
             datesAffichees.add(datePrevision);
 
             if (datesAffichees.size >= 5) {
-                break
+                break;
             }
         }
     }
@@ -63,6 +69,7 @@ async function entreeVille(cityName) {
         q: cityName,
         format: "json",
         limit: 5,
+        featureType: "city"
     });
 
     const url = `https://nominatim.openstreetmap.org/search?${params}`;
@@ -126,18 +133,104 @@ document.getElementById('ville__button').addEventListener('click', async functio
 });
 
 
-function ajouterVilleLocalStorage(ville) {
-
+function ajouterVilleLocalStorage(ville, container) {
     if (typeof(Storage) !== "undefined") {
-       
         const villesEnregistrees = JSON.parse(localStorage.getItem('villes')) || [];
 
-        villesEnregistrees.push(ville);
+        if (!villesEnregistrees.includes(ville)) {
+            villesEnregistrees.push(ville);
 
-        localStorage.setItem('villes', JSON.stringify(villesEnregistrees));
+            const villesLimitees = villesEnregistrees.slice(-5);
+
+            localStorage.setItem('villes', JSON.stringify(villesLimitees));
+
+            chargerVillesDepuisLocalStorage(container);
+        }
     } else {
         console.error("LocalStorage n'est pas pris en charge dans ce navigateur.");
     }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    chargerVillesDepuisLocalStorage();
+});
 
+function chargerVillesDepuisLocalStorage(container) {
+    const villesEnregistrees = JSON.parse(localStorage.getItem('villes')) || [];
+
+    const datalist = container || document.getElementById('ville__complete');
+    datalist.innerHTML = '';
+
+    const villesAffichees = villesEnregistrees.slice(-5);
+
+    villesAffichees.forEach((ville) => {
+        const option = document.createElement('option');
+        option.value = ville;
+        datalist.appendChild(option);
+    });
+}
+
+villeButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    traiterSoumissionVille(villeAdresse, previsionsMeteo);
+});
+
+villeButton2.addEventListener('click', (event) => {
+    event.preventDefault();
+    traiterSoumissionVille(villeAdresse2, previsionsMeteo2);
+});
+
+async function traiterSoumissionVille(villeAdresse, previsionsMeteo) {
+    const ville = villeAdresse.value.trim();
+    if (!ville) {
+        alert("Veuillez entrer une ville valide.");
+        return;
+    }
+
+    try {
+        const donneesMeteo = await obtenirDonneesMeteo(ville);
+        afficherPrevisionsMeteo(donneesMeteo, ville, previsionsMeteo);
+        ajouterVilleLocalStorage(ville);
+    } catch (erreur) {
+        alert(`Erreur lors de la récupération des informations météorologiques : ${erreur}`);
+    }
+
+    villeAdresse.value = '';
+}
+
+document.getElementById('ville2__adresse').addEventListener('keyup', (e) => {
+    const input = e.target;
+
+    if (input.value.length < 3) {
+        return;
+    }
+
+    if (gererChargeKeyup !== null) {
+        clearTimeout(gererChargeKeyup);
+    }
+
+    gererChargeKeyup = setTimeout(() => {
+        entreeVille(input.value);
+        gererChargeKeyup = null;
+    }, 400);
+});
+
+document.getElementById('ville2__button').addEventListener('click', async function (event) {
+    event.preventDefault();
+
+    const ville = villeAdresse2.value.trim();
+    if (!ville) {
+        alert("Veuillez entrer une ville valide.");
+        return;
+    }
+
+    try {
+        const donneesMeteo = await obtenirDonneesMeteo(ville);
+        afficherPrevisionsMeteo(donneesMeteo, ville, previsionsMeteo2);
+        ajouterVilleLocalStorage(ville);
+    } catch (erreur) {
+        alert(`Erreur lors de la récupération des informations météorologiques : ${erreur}`);
+    }
+
+    villeAdresse2.value = '';
+});
