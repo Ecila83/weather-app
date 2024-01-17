@@ -1,5 +1,94 @@
-#previsionsMeteo, #previsionsMeteo2 {
+#previsionsMeteo,
+#previsionsMeteo2 {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  display: flex;
+  overflow-x: auto;
+}
+#previsionsMeteo .jour,
+#previsionsMeteo2 .jour {
+  flex: 1;
+}
+#previsionsMeteo .jour h2,
+#previsionsMeteo .jour h3,
+#previsionsMeteo .jour p,
+#previsionsMeteo .jour img,
+#previsionsMeteo2 .jour h2,
+#previsionsMeteo2 .jour h3,
+#previsionsMeteo2 .jour p,
+#previsionsMeteo2 .jour img {
+  margin: 0 10px;
+}
+
+.ville-container,
+.ville2-container {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#previsionsMeteo,
+#previsionsMeteo2 {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#previsionsMeteo .jour,
+#previsionsMeteo2 .jour {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+}
+#previsionsMeteo .jour h2,
+#previsionsMeteo .jour h3,
+#previsionsMeteo2 .jour h2,
+#previsionsMeteo2 .jour h3 {
+  margin: 0;
+}
+#previsionsMeteo .jour img,
+#previsionsMeteo2 .jour img {
+  max-width: 50px;
+}
+#previsionsMeteo .jour p,
+#previsionsMeteo2 .jour p {
+  margin: 5px 0;
+}
+
+.ville-container,
+.ville2-container {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #eff6d2;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+body {
+  background-color: #eff6d2;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  padding: 10px;
+}
+
+.city {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+.city button {
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+.city input {
+  flex: 1;
+  margin-left: 10px;
+  padding: 10px;
 }/*# sourceMappingURL=style.css.map */

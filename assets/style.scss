@@ -1,6 +1,129 @@
-#previsionsMeteo, #previsionsMeteo2 {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  
+// Variables
+$background-size: cover;
+$background-position: center;
+$background-repeat: no-repeat;
+
+// Mixin pour les prévisions météo
+@mixin previsionsMeteo {
+    background-size: $background-size;
+    background-position: $background-position;
+    background-repeat: $background-repeat;
 }
+
+
+// Styles pour les prévisions météo
+#previsionsMeteo,
+#previsionsMeteo2 {
+    @include previsionsMeteo;
+    display: flex;
+    overflow-x: auto;
+
+    .jour {
+
+        flex: 1; // Ajuster la taille de chaque jour pour occuper l'espace disponible
+
+        h2,
+        h3,
+        p,
+        img {
+            margin: 0 10px;
+        }
+    }
+}
+
+
+
+// Styles pour les conteneurs des villes
+.ville-container,
+.ville2-container {
+    & {
+        @include previsionsMeteo;
+    }
+}
+
+// Couleurs
+$couleur-principale: #3498db;
+$couleur-secondaire: #2ecc71;
+$couleur-texte: #ffffff;
+$couleur-fond: #eff6d2;
+
+// Tailles de police
+$taille-police-principale: 1.5rem;
+$taille-police-secondaire: 1.2rem;
+
+// Espacements
+$espacement-interne: 10px;
+
+// Styles pour les formulaires
+
+
+// Styles pour les prévisions météo
+#previsionsMeteo,
+#previsionsMeteo2 {
+    @include previsionsMeteo;
+
+    .jour {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: $espacement-interne;
+        margin: $espacement-interne;
+        border-radius: 5px;
+
+        h2,
+        h3 {
+            margin: 0;
+        }
+
+        img {
+            max-width: 50px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+    }
+}
+
+// Styles pour les conteneurs des villes
+.ville-container,
+.ville2-container {
+    & {
+        @include previsionsMeteo;
+        background-color: $couleur-fond;
+        border-radius: 10px;
+        padding: $espacement-interne;
+        margin-bottom: $espacement-interne;
+    }
+
+    // Ajoutez d'autres styles spécifiques au besoin
+}
+
+// Styles pour le corps de la page
+body {
+    background-color: $couleur-fond;
+    color: $couleur-texte;
+    font-family: Arial, sans-serif;
+    padding: $espacement-interne;
+}
+
+.city {
+    
+        display: flex;
+        flex-direction: row; 
+        justify-content: center; 
+        gap: 10px; 
+      
+        button {
+          background-color: $couleur-principale;
+          color: $couleur-texte;
+          border: none;
+          padding: $espacement-interne;
+          cursor: pointer;
+        }
+      
+        input {
+          flex: 1;
+          margin-left: $espacement-interne;
+          padding: $espacement-interne;
+        }
+      }
+

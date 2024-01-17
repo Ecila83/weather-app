@@ -8,6 +8,18 @@ const villeAdresse2 = document.getElementById('ville2__adresse');
 const villeButton2 = document.getElementById('ville2__button');
 const previsionsMeteo2 = document.getElementById('previsionsMeteo2');
 
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function cleanCityName(fullCityName) {
+    const tmp = fullCityName.split(',')
+    const tmp2 = [tmp.shift(), tmp.pop()].filter(x => x).map(capitalize)
+    return tmp2.join(',')
+
+    // "Bruxelles, Bruxelles-Capitale, Belgique".split(',').flatMap((i, index, arr) => (index % (arr.length - 1)) ? [] : i.trim()).join(', ')
+}
+
 
 async function obtenirDonneesMeteo(ville) {
     const cleApi = 'bf1a733eb58df0e14bb400e330ad9d9a';
@@ -40,6 +52,8 @@ function afficherPrevisionsMeteo(donnees, ville, container, image) {
     for(const previsionsJour of donnees.list) {
         const datePrevision = new Date(previsionsJour.dt * 1000).toLocaleDateString('fr-FR');
         const temperatureCelsius = previsionsJour.main.temp;
+        const conditionsIcon = previsionsJour.weather[0].icon;
+        const iconurl = "http://openweathermap.org/img/w/" + conditionsIcon + ".png";
 
         if (!datesAffichees.has(datePrevision)) {
             const jourElement = document.createElement('div');
@@ -47,13 +61,16 @@ function afficherPrevisionsMeteo(donnees, ville, container, image) {
 
             jourElement.innerHTML =
                 `
-                <h2> ${ville} </h2>
+                <h2> ${cleanCityName(ville)} </h2>
                 <h3>le ${datePrevision}</h3>
                 <p>Conditions météorologiques : ${previsionsJour.weather[0].description}</p>
+                <img src="" class="openweather-icon">
                 <p>Température : ${temperatureCelsius.toFixed(0)} °C</p>
                 <p>Humidité : ${previsionsJour.main.humidity}%</p>
                 <p>Vitesse du vent : ${previsionsJour.wind.speed} m/s</p>
                 `;
+
+            jourElement.querySelector('.openweather-icon').src = iconurl
 
             datesAffichees.add(datePrevision);
 
@@ -120,28 +137,6 @@ document.getElementById('ville__adresse').addEventListener('keyup', (e) => {
         gererChargeKeyup = null;
     }, 400);
 });
-
-
-// document.getElementById('ville__button').addEventListener('click', async function (event) {
-//     event.preventDefault();
-
-//     const ville = villeAdresse.value.trim();
-//     if (!ville) {
-//         alert("Veuillez entrer une ville valide.");
-//         return;
-//     }
-
-//     try {
-//         const donneesMeteo = await obtenirDonneesMeteo(ville);
-//         afficherPrevisionsMeteo(donneesMeteo, ville);
-
-
-//         ajouterVilleLocalStorage(ville);
-//     } catch (erreur) {
-//         alert(`Erreur lors de la récupération des informations météorologiques : ${erreur}`);
-//     }
-//     villeAdresse.value = '';
-// });
 
 
 function ajouterVilleLocalStorage(ville, container) {
@@ -230,30 +225,11 @@ document.getElementById('ville2__adresse').addEventListener('keyup', (e) => {
     }, 400);
 });
 
-// document.getElementById('ville2__button').addEventListener('click', async function (event) {
-//     event.preventDefault();
-
-//     const ville = villeAdresse2.value.trim();
-//     if (!ville) {
-//         alert("Veuillez entrer une ville valide.");
-//         return;
-//     }
-
-//     try {
-//         const donneesMeteo = await obtenirDonneesMeteo(ville);
-//         afficherPrevisionsMeteo(donneesMeteo, ville, previsionsMeteo2);
-//         ajouterVilleLocalStorage(ville);
-//     } catch (erreur) {
-//         alert(`Erreur lors de la récupération des informations météorologiques : ${erreur}`);
-//     }
-
-//     villeAdresse2.value = '';
-// });
 
 async function obtenirImageVille(ville) {
     const cleApiImage = 'H4wROuyTTghwfppzg5xg3EI9Ec5NslLEb51MPkY-71c';
-    const url = `https://api.unsplash.com/search/photos?query=${ville}&client_id=${cleApiImage}`;
-
+    const url = ` https://api.unsplash.com/search/photos?client_id=${cleApiImage}&page=1&query=${ville};`
+   
     try {
         const response = await fetch(url);
         const data = await response.json();
