@@ -17,7 +17,6 @@ function cleanCityName(fullCityName) {
     const tmp2 = [tmp.shift(), tmp.pop()].filter(x => x).map(capitalize)
     return tmp2.join(',')
 
-    // "Bruxelles, Bruxelles-Capitale, Belgique".split(',').flatMap((i, index, arr) => (index % (arr.length - 1)) ? [] : i.trim()).join(', ')
 }
 
 
@@ -33,6 +32,7 @@ async function obtenirDonneesMeteo(ville) {
 
     return await reponse.json();
 }
+
 
 function afficherPrevisionsMeteo(donnees, ville, container, image) {
     const previsionsContainer = container || document.getElementById('previsionsMeteo');
@@ -62,12 +62,12 @@ function afficherPrevisionsMeteo(donnees, ville, container, image) {
             jourElement.innerHTML =
                 `
                 <h2> ${cleanCityName(ville)} </h2>
-                <h3>le ${datePrevision}</h3>
-                <p>Conditions météorologiques : ${previsionsJour.weather[0].description}</p>
+                <h3>${datePrevision}</h3>
+                <p>${previsionsJour.weather[0].description}</p>
                 <img src="" class="openweather-icon">
-                <p>Température : ${temperatureCelsius.toFixed(0)} °C</p>
+                <p class=temperature>${temperatureCelsius.toFixed(0)} °C</p>
                 <p>Humidité : ${previsionsJour.main.humidity}%</p>
-                <p>Vitesse du vent : ${previsionsJour.wind.speed} m/s</p>
+                <p>Vent : ${previsionsJour.wind.speed} m/s</p>
                 `;
 
             jourElement.querySelector('.openweather-icon').src = iconurl

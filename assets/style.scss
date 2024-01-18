@@ -3,6 +3,7 @@ $background-size: cover;
 $background-position: center;
 $background-repeat: no-repeat;
 
+$espacement-interne: 10px;
 // Mixin pour les prévisions météo
 @mixin previsionsMeteo {
     background-size: $background-size;
@@ -33,44 +34,32 @@ $background-repeat: no-repeat;
 
 
 
-// Styles pour les conteneurs des villes
-.ville-container,
-.ville2-container {
-    & {
-        @include previsionsMeteo;
-    }
-}
-
 // Couleurs
-$couleur-principale: #3498db;
-$couleur-secondaire: #2ecc71;
-$couleur-texte: #ffffff;
-$couleur-fond: #eff6d2;
-
-// Tailles de police
-$taille-police-principale: 1.5rem;
-$taille-police-secondaire: 1.2rem;
-
-// Espacements
-$espacement-interne: 10px;
-
-// Styles pour les formulaires
-
+$couleur-fond-sombre: #2c3e50; // Fond sombre
+$couleur-texte-clair: #ecf0f1; // Texte clair
+$couleur-carte: #555f68; // Couleur de fond des cartes
+$couleur-bouton: #3498db; // Couleur des boutons
 
 // Styles pour les prévisions météo
-#previsionsMeteo,
-#previsionsMeteo2 {
+#previsionsMeteo, #previsionsMeteo2 {
     @include previsionsMeteo;
 
+    .jour:first-child {
+        background-color: rgb(66, 22, 109);
+    }
+
     .jour {
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: $couleur-carte;
         padding: $espacement-interne;
         margin: $espacement-interne;
-        border-radius: 5px;
+        border-radius: 20px;
+        text-align: center;
+        justify-content: space-around;
+        
 
-        h2,
-        h3 {
-            margin: 0;
+        h2, h3 {
+            margin-bottom: 10px; 
+            color: $couleur-texte-clair;
         }
 
         img {
@@ -79,17 +68,25 @@ $espacement-interne: 10px;
 
         p {
             margin: 5px 0;
+            color: $couleur-texte-clair;
+            &.temperature {
+                font-size: 2em; 
+                font-weight: bold;
+                color: #b479a2;
+                margin-bottom: 20px;
+            }
         }
     }
 }
 
+
+
 // Styles pour les conteneurs des villes
-.ville-container,
-.ville2-container {
+.ville-container, .ville2-container {
     & {
         @include previsionsMeteo;
-        background-color: $couleur-fond;
-        border-radius: 10px;
+
+        border-radius: 30px;
         padding: $espacement-interne;
         margin-bottom: $espacement-interne;
     }
@@ -99,31 +96,31 @@ $espacement-interne: 10px;
 
 // Styles pour le corps de la page
 body {
-    background-color: $couleur-fond;
-    color: $couleur-texte;
+    background-color: $couleur-fond-sombre;
+    color: $couleur-texte-clair;
     font-family: Arial, sans-serif;
     padding: $espacement-interne;
 }
 
-.city {
-    
-        display: flex;
-        flex-direction: row; 
-        justify-content: center; 
-        gap: 10px; 
-      
-        button {
-          background-color: $couleur-principale;
-          color: $couleur-texte;
-          border: none;
-          padding: $espacement-interne;
-          cursor: pointer;
-        }
-      
-        input {
-          flex: 1;
-          margin-left: $espacement-interne;
-          padding: $espacement-interne;
-        }
-      }
+// Styles pour les formulaires
+#ville, #ville2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+
+    button {
+        background-color: $couleur-bouton;
+        color: $couleur-texte-clair;
+        border: none;
+        padding: $espacement-interne;
+        cursor: pointer;
+    }
+
+    input {
+        flex: 1;
+        margin-left: $espacement-interne;
+        padding: $espacement-interne;
+    }
+}
 
