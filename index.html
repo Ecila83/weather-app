@@ -10,19 +10,22 @@
 
 <body>
     <div class="city">
-        <form id="ville" class =city__form>
-            <button type="button" id="ville__button">Ville</button>
-            <input type="text" id="ville__adresse" list="ville__complete" placeholder="Entrez une ville..."
-                autocomplete="on">
+        <form id="ville" class="city__form">
+            <label for="ville__adresse">
+                <input type="text" id="ville__adresse" list="ville__complete" placeholder="Entrez une ville...">
+                <button type="button" id="ville__button">Ville</button>
+            </label>
             <datalist id="ville__complete"></datalist>
         </form>
 
-        <form id="ville2" class =city__form>
-            <button type="button" id="ville2__button">Ville 2</button>
-            <input type="text" id="ville2__adresse" list="ville__complete" placeholder="Entrez une ville..."
-                autocomplete="on">
+        <form id="ville2" class="city__form">
+            <label for="ville2__adresse">
+                <input type="text" id="ville2__adresse" list="ville2__complete" placeholder="Entrez une ville...">
+                <button type="button" id="ville2__button">Ville 2</button>
+            </label>
             <datalist id="ville2__complete"></datalist>
         </form>
+        
     </div>
 
     <div class="ville-container" id="ville-container">
@@ -33,7 +36,7 @@
         <div id="previsionsMeteo2"></div>
     </div>
 
-    <script src="assets/script.js"></script>
+    <script type="module" src="assets/script.js"></script>
 </body>
 
 </html>

@@ -20,13 +20,9 @@ $espacement-interne: 10px;
     overflow-x: auto;
 
     .jour {
+        flex: 1;
 
-        flex: 1; // Ajuster la taille de chaque jour pour occuper l'espace disponible
-
-        h2,
-        h3,
-        p,
-        img {
+        h2, h3, p, img {
             margin: 0 10px;
         }
     }
@@ -82,16 +78,16 @@ $couleur-bouton: #3498db; // Couleur des boutons
 
 
 // Styles pour les conteneurs des villes
-.ville-container, .ville2-container {
-    & {
-        @include previsionsMeteo;
+.ville-container,
+.ville2-container {
+    @include previsionsMeteo; // Retirez cette ligne si vous ne voulez pas d'arrière-plan sur les conteneurs météo
 
+    & {
         border-radius: 30px;
         padding: $espacement-interne;
         margin-bottom: $espacement-interne;
+      
     }
-
-    // Ajoutez d'autres styles spécifiques au besoin
 }
 
 // Styles pour le corps de la page
@@ -102,6 +98,8 @@ body {
     padding: $espacement-interne;
 }
 
+
+
 // Styles pour les formulaires
 #ville, #ville2 {
     display: flex;
@@ -109,18 +107,34 @@ body {
     justify-content: center;
     gap: 10px;
 
-    button {
-        background-color: $couleur-bouton;
-        color: $couleur-texte-clair;
-        border: none;
+    label {
+        display: flex;
+        align-items: center;
+        background-color: $couleur-fond-sombre;
+        border-radius: 20px;
+        border: 1px solid $couleur-bouton;
         padding: $espacement-interne;
-        cursor: pointer;
-    }
 
-    input {
-        flex: 1;
-        margin-left: $espacement-interne;
-        padding: $espacement-interne;
+        input {
+            flex: 1;
+            padding: 8px; // Ajustez la taille du padding selon vos préférences
+            border: none;
+            border-radius: 20px;
+            background-color: transparent;
+            color: $couleur-texte-clair;
+            font-size: 16px; // Ajustez la taille de la police selon vos préférences
+            margin-right: 10px; // Ajustez l'espacement entre l'input et le bouton selon vos préférences
+        }
+
+        button {
+            background-color: $couleur-bouton;
+            color: $couleur-texte-clair;
+            border: none;
+            padding: $espacement-interne;
+            cursor: pointer;
+            border-radius: 20px;
+        }
     }
 }
+
 

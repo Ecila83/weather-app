@@ -10,10 +10,7 @@
 #previsionsMeteo2 .jour {
   flex: 1;
 }
-#previsionsMeteo .jour h2,
-#previsionsMeteo .jour h3,
-#previsionsMeteo .jour p,
-#previsionsMeteo .jour img,
+#previsionsMeteo .jour h2, #previsionsMeteo .jour h3, #previsionsMeteo .jour p, #previsionsMeteo .jour img,
 #previsionsMeteo2 .jour h2,
 #previsionsMeteo2 .jour h3,
 #previsionsMeteo2 .jour p,
@@ -55,10 +52,14 @@
   margin-bottom: 20px;
 }
 
-.ville-container, .ville2-container {
+.ville-container,
+.ville2-container {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+.ville-container,
+.ville2-container {
   border-radius: 30px;
   padding: 10px;
   margin-bottom: 10px;
@@ -77,15 +78,29 @@ body {
   justify-content: center;
   gap: 10px;
 }
-#ville button, #ville2 button {
+#ville label, #ville2 label {
+  display: flex;
+  align-items: center;
+  background-color: #2c3e50;
+  border-radius: 20px;
+  border: 1px solid #3498db;
+  padding: 10px;
+}
+#ville label input, #ville2 label input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 20px;
+  background-color: transparent;
+  color: #ecf0f1;
+  font-size: 16px;
+  margin-right: 10px;
+}
+#ville label button, #ville2 label button {
   background-color: #3498db;
   color: #ecf0f1;
   border: none;
   padding: 10px;
   cursor: pointer;
-}
-#ville input, #ville2 input {
-  flex: 1;
-  margin-left: 10px;
-  padding: 10px;
+  border-radius: 20px;
 }/*# sourceMappingURL=style.css.map */
