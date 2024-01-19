@@ -7,10 +7,15 @@
     <title>Application Météo</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
+<header>
+    <h1>Wheather-app</h1>
+   
+</header>
 
 <body>
+  
     <div class="city">
-        <form id="ville" class="city__form">
+        <form id="ville" class="city__form custom-background">
             <label for="ville__adresse">
                 <input type="text" id="ville__adresse" list="ville__complete" placeholder="Entrez une ville...">
                 <button type="button" id="ville__button">Ville</button>
@@ -18,19 +23,21 @@
             <datalist id="ville__complete"></datalist>
         </form>
 
-        <form id="ville2" class="city__form">
+        <form id="ville2" class="city__form custom-background">
             <label for="ville2__adresse">
                 <input type="text" id="ville2__adresse" list="ville2__complete" placeholder="Entrez une ville...">
                 <button type="button" id="ville2__button">Ville 2</button>
             </label>
             <datalist id="ville2__complete"></datalist>
         </form>
-        
+
     </div>
 
     <div class="ville-container" id="ville-container">
         <div id="previsionsMeteo"></div>
     </div>
+
+    <hr>
 
     <div class="ville2-container" id="ville2-container">
         <div id="previsionsMeteo2"></div>

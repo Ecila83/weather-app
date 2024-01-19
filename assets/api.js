@@ -51,7 +51,7 @@ export async function obtenirImageVille(ville) {
         const data = await response.json();
         console.log(data);
         if (data && data.results && data.results.length > 0) {
-            const image = data.results[0].urls.regular;
+            const image = data.results[0].urls.small;
             return image;
         } else {
             console.error('Aucune image trouvée pour la ville :', ville);
@@ -63,7 +63,7 @@ export async function obtenirImageVille(ville) {
     }
 }
 
-export function mettreAJourFondEcran(elmForBackground, imageUrl) {
-    elmForBackground.style.backgroundImage = `url('${imageUrl}')`;
+export function mettreAJourFondEcran(form, imageUrl) {
+    form.style.backgroundImage = `url('${imageUrl}')`;
 }
 

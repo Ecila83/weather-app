@@ -1,140 +1,244 @@
-// Variables
 $background-size: cover;
 $background-position: center;
 $background-repeat: no-repeat;
 
-$espacement-interne: 10px;
-// Mixin pour les prévisions météo
-@mixin previsionsMeteo {
-    background-size: $background-size;
-    background-position: $background-position;
-    background-repeat: $background-repeat;
+$spacing: 10px;
+$background-color: #87CEEB;
+$light-text-color: #ecf0f1;
+$card-color: #1E90FF;
+$button-color: #6495ED;
+
+@mixin weatherForecast {
+  background-size: $background-size;
+  background-position: $background-position;
+  background-repeat: $background-repeat;
 }
 
+h1 {
+  text-align: center;
+  margin: 30px;
+  font-size: 60px;
+}
 
-// Styles pour les prévisions météo
+body {
+  background-color: $background-color;
+  color: $light-text-color;
+  font-family: Arial, sans-serif;
+  padding: $spacing;
+}
+
 #previsionsMeteo,
 #previsionsMeteo2 {
-    @include previsionsMeteo;
-    display: flex;
-    overflow-x: auto;
+  @include weatherForecast;
 
-    .jour {
-        flex: 1;
+  display: flex;
+  overflow-x: auto;
+  gap: 2rem;
+  padding: 1rem;
 
-        h2, h3, p, img {
-            margin: 0 10px;
-        }
+  .jour {
+    flex: 1;
+    box-shadow: 0px 0px 10px 2px #f0f3e3;
+
+    background-color: $card-color;
+    padding: $spacing;
+    border-radius: 20px;
+    text-align: center;
+    justify-content: space-around;
+
+    &:hover {
+      outline: 0.5rem solid $card-color;
+      box-shadow: 0px 0px 15px 10px #f0f3e3;
     }
+
+    h2,
+    h3,
+    p,
+    img {
+      margin: 0 $spacing;
+    }
+
+    h2,
+    h3 {
+      margin-bottom: $spacing;
+      color: $light-text-color;
+    }
+
+    p {
+      margin: 5px 0;
+      color: $light-text-color;
+
+      &.temperature {
+        font-size: 2em;
+        font-weight: bold;
+        color: #15dbde;
+        margin-bottom: 20px;
+      }
+
+      img {
+        max-width: 50px;
+      }
+    }
+
+  }
+
+  .jour:first-child {
+    background-color: #4169E1;
+
+    &:hover {
+      outline: 0.5rem solid #4169E1;
+      box-shadow: 0px 0px 15px 10px #e1f199;
+    }
+  }
 }
 
 
 
-// Couleurs
-$couleur-fond-sombre: #2c3e50; // Fond sombre
-$couleur-texte-clair: #ecf0f1; // Texte clair
-$couleur-carte: #555f68; // Couleur de fond des cartes
-$couleur-bouton: #3498db; // Couleur des boutons
 
-// Styles pour les prévisions météo
-#previsionsMeteo, #previsionsMeteo2 {
-    @include previsionsMeteo;
-
-    .jour:first-child {
-        background-color: rgb(66, 22, 109);
-    }
-
-    .jour {
-        background-color: $couleur-carte;
-        padding: $espacement-interne;
-        margin: $espacement-interne;
-        border-radius: 20px;
-        text-align: center;
-        justify-content: space-around;
-        
-
-        h2, h3 {
-            margin-bottom: 10px; 
-            color: $couleur-texte-clair;
-        }
-
-        img {
-            max-width: 50px;
-        }
-
-        p {
-            margin: 5px 0;
-            color: $couleur-texte-clair;
-            &.temperature {
-                font-size: 2em; 
-                font-weight: bold;
-                color: #b479a2;
-                margin-bottom: 20px;
-            }
-        }
-    }
-}
-
-
-
-// Styles pour les conteneurs des villes
 .ville-container,
 .ville2-container {
-    @include previsionsMeteo; // Retirez cette ligne si vous ne voulez pas d'arrière-plan sur les conteneurs météo
+  @include weatherForecast;
 
-    & {
-        border-radius: 30px;
-        padding: $espacement-interne;
-        margin-bottom: $espacement-interne;
-      
+  border-radius: 30px;
+  padding: $spacing;
+  margin-bottom: $spacing;
+}
+
+.city__form {
+  label {
+    background-color: $background-color;
+    border-radius: 20px;
+    border: 1px solid $button-color;
+
+    input {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      border-radius: 20px;
+      background-color: transparent;
+      background-size: contain;
+      color: $light-text-color;
+      font-size: 16px;
+
+      &.ville {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      &.ville2 {
+        background-size: contain;
+        background-position: left top;
+        background-repeat: no-repeat;
+        background: rgba(0, 0, 0, 0.5);
+      }
     }
-}
 
-// Styles pour le corps de la page
-body {
-    background-color: $couleur-fond-sombre;
-    color: $couleur-texte-clair;
-    font-family: Arial, sans-serif;
-    padding: $espacement-interne;
-}
+    button {
+      background-color: $button-color;
+      color: $light-text-color;
+      border: none;
+      padding: $spacing;
+      cursor: pointer;
+      border-radius: 50px;
+      width: 5rem;
 
+      transition: background-color 0.3s, color 0.3s;
 
-
-// Styles pour les formulaires
-#ville, #ville2 {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
-
-    label {
-        display: flex;
-        align-items: center;
-        background-color: $couleur-fond-sombre;
+      &:hover {
+        background-color: darken($button-color, 10%);
+        color: lighten($light-text-color, 20%);
         border-radius: 20px;
-        border: 1px solid $couleur-bouton;
-        padding: $espacement-interne;
+      }
 
-        input {
-            flex: 1;
-            padding: 8px; // Ajustez la taille du padding selon vos préférences
-            border: none;
-            border-radius: 20px;
-            background-color: transparent;
-            color: $couleur-texte-clair;
-            font-size: 16px; // Ajustez la taille de la police selon vos préférences
-            margin-right: 10px; // Ajustez l'espacement entre l'input et le bouton selon vos préférences
-        }
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(lighten($button-color, 10%), 0.5);
+      }
 
-        button {
-            background-color: $couleur-bouton;
-            color: $couleur-texte-clair;
-            border: none;
-            padding: $espacement-interne;
-            cursor: pointer;
-            border-radius: 20px;
-        }
+      &:active {
+        background-color: darken($button-color, 20%);
+        color: lighten($light-text-color, 30%);
+        border-radius: 20px;
+      }
     }
+  }
 }
 
+.city {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include weatherForecast;
+  // background-image: url("../img/ciel-nuages-image.jpg");
+  margin-bottom: 3rem;
+}
 
+#ville {
+  border-top-left-radius: 3rem;
+  border-top-right-radius: 3rem;
+  background: rgba(247, 242, 242, 0.5);
+  box-shadow: 0px 0px 15px 10px #f0f3e3;
+}
+
+#ville2 {
+  border-bottom-left-radius: 3rem;
+  border-bottom-right-radius: 3rem;
+  background: rgba(247, 242, 242, 0.5);
+  box-shadow: 0px 0px 15px 10px #f0f3e3;
+}
+
+#ville,
+#ville2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-position: center;
+  max-width: fit-content;
+  padding: 3rem;
+}
+
+@media screen and (min-width: 760px) {
+  hr {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  h1 {
+    font-size: 45px;
+    margin: 0 0 2rem 0;
+  }
+
+  button {
+    justify-content: center;
+
+  }
+
+  #previsionsMeteo,
+  #previsionsMeteo2 {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+  }
+
+  .jour {
+    margin: 5Px;
+  }
+
+  #ville,
+  #ville2 {
+    label {
+      display: flex;
+    }
+
+    padding: 2.5rem 1.5rem;
+  }
+
+  .city {
+    margin: 0;
+  }
+}
