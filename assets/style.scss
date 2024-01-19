@@ -25,6 +25,14 @@ body {
   color: $light-text-color;
   font-family: Arial, sans-serif;
   padding: $spacing;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &.dark {
+    background-color: darken($color: $background-color, $amount: 60)
+  }
 }
 
 #previsionsMeteo,
@@ -37,6 +45,11 @@ body {
   padding: 1rem;
 
   .jour {
+    body.dark & {
+      background-color: darken($color: $card-color, $amount: 45);
+      box-shadow: 0px 0px 10px 2px darken($color: #f0f3e3, $amount: 10);
+    }
+
     flex: 1;
     box-shadow: 0px 0px 10px 2px #f0f3e3;
 
@@ -84,6 +97,10 @@ body {
 
   .jour:first-child {
     background-color: #4169E1;
+
+    body.dark & {
+      background-color: darken($color: #4169E1, $amount: 60);
+    }
 
     &:hover {
       outline: 0.5rem solid #4169E1;
@@ -136,6 +153,10 @@ body {
     }
 
     button {
+      body.dark & {
+        background-color: darken($color: $button-color, $amount: 40);
+      }
+
       background-color: $button-color;
       color: $light-text-color;
       border: none;
@@ -144,7 +165,8 @@ body {
       border-radius: 50px;
       width: 5rem;
 
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color 0.3s,
+      color 0.3s;
 
       &:hover {
         background-color: darken($button-color, 10%);
@@ -173,20 +195,23 @@ body {
   @include weatherForecast;
   // background-image: url("../img/ciel-nuages-image.jpg");
   margin-bottom: 3rem;
+
+  border-radius: 3rem;
+  max-width: fit-content;
+  box-shadow: 0px 0px 15px 10px #f0f3e3;
+  overflow: hidden;
+
+  body.dark & {
+    box-shadow: 0px 0px 15px 10px darken($color: #f0f3e3, $amount: 10);
+  }
 }
 
 #ville {
-  border-top-left-radius: 3rem;
-  border-top-right-radius: 3rem;
   background: rgba(247, 242, 242, 0.5);
-  box-shadow: 0px 0px 15px 10px #f0f3e3;
 }
 
 #ville2 {
-  border-bottom-left-radius: 3rem;
-  border-bottom-right-radius: 3rem;
   background: rgba(247, 242, 242, 0.5);
-  box-shadow: 0px 0px 15px 10px #f0f3e3;
 }
 
 #ville,
@@ -208,8 +233,12 @@ body {
 }
 
 @media screen and (max-width: 760px) {
+  header {
+    align-self: baseline;
+  }
+
   h1 {
-    font-size: 45px;
+    font-size: 35px;
     margin: 0 0 2rem 0;
   }
 
@@ -241,4 +270,31 @@ body {
   .city {
     margin: 0;
   }
+}
+
+// ----- DARK MODE -----
+
+.bt-theme-light {
+  display: none;
+}
+
+body.dark {
+  .bt-theme-light {
+    display: initial;
+  }
+
+  .bt-theme-dark {
+    display: none;
+  }
+}
+
+.bt-theme {
+  font-size: 200%;
+  cursor: pointer;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1rem;
+  margin: 8px;
 }

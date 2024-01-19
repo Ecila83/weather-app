@@ -1,6 +1,7 @@
 import { cleanCityName, temporisateur } from './utils.js';
 import { ajouterVilleLocalStorage, chargerVillesDepuisLocalStorage } from './storage.js';
 import { entreeVille, obtenirDonneesMeteo, obtenirImageVille, mettreAJourFondEcran } from './api.js';
+import {} from './dark-mode.js'
 
 function afficherPrevisionsMeteo(donnees, ville, previsionsContainer) {
     if (!donnees || !donnees.list || donnees.list.length === 0) {

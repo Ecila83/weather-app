@@ -9,6 +9,12 @@ body {
   color: #ecf0f1;
   font-family: Arial, sans-serif;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body.dark {
+  background-color: #092a37;
 }
 
 #previsionsMeteo,
@@ -30,6 +36,11 @@ body {
   border-radius: 20px;
   text-align: center;
   justify-content: space-around;
+}
+body.dark #previsionsMeteo .jour,
+body.dark #previsionsMeteo2 .jour {
+  background-color: #001c38;
+  box-shadow: 0px 0px 10px 2px #dde4bf;
 }
 #previsionsMeteo .jour:hover,
 #previsionsMeteo2 .jour:hover {
@@ -72,6 +83,10 @@ body {
 #previsionsMeteo .jour:first-child,
 #previsionsMeteo2 .jour:first-child {
   background-color: #4169E1;
+}
+body.dark #previsionsMeteo .jour:first-child,
+body.dark #previsionsMeteo2 .jour:first-child {
+  background-color: black;
 }
 #previsionsMeteo .jour:first-child:hover,
 #previsionsMeteo2 .jour:first-child:hover {
@@ -126,6 +141,9 @@ body {
   width: 5rem;
   transition: background-color 0.3s, color 0.3s;
 }
+body.dark .city__form label button {
+  background-color: #0e3477;
+}
 .city__form label button:hover {
   background-color: #3676e8;
   color: white;
@@ -149,20 +167,22 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   margin-bottom: 3rem;
+  border-radius: 3rem;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  box-shadow: 0px 0px 15px 10px #f0f3e3;
+  overflow: hidden;
+}
+body.dark .city {
+  box-shadow: 0px 0px 15px 10px #dde4bf;
 }
 
 #ville {
-  border-top-left-radius: 3rem;
-  border-top-right-radius: 3rem;
   background: rgba(247, 242, 242, 0.5);
-  box-shadow: 0px 0px 15px 10px #f0f3e3;
 }
 
 #ville2 {
-  border-bottom-left-radius: 3rem;
-  border-bottom-right-radius: 3rem;
   background: rgba(247, 242, 242, 0.5);
-  box-shadow: 0px 0px 15px 10px #f0f3e3;
 }
 
 #ville,
@@ -184,8 +204,11 @@ body {
   }
 }
 @media screen and (max-width: 760px) {
+  header {
+    align-self: baseline;
+  }
   h1 {
-    font-size: 45px;
+    font-size: 35px;
     margin: 0 0 2rem 0;
   }
   button {
@@ -211,4 +234,24 @@ body {
   .city {
     margin: 0;
   }
+}
+.bt-theme-light {
+  display: none;
+}
+
+body.dark .bt-theme-light {
+  display: initial;
+}
+body.dark .bt-theme-dark {
+  display: none;
+}
+
+.bt-theme {
+  font-size: 200%;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1rem;
+  margin: 8px;
 }/*# sourceMappingURL=style.css.map */
